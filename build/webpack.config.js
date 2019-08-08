@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: "../src/index.js",
@@ -7,15 +9,26 @@ module.exports = {
     publicPath: '/',
     module: {
         rules: [
-
-        ]
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.js|jsx?$/,
+                loaders: ['babel-loader'],
+                query: {
+                    presets: ['react', 'es2015']
+                }
+            }
+            
+        ],
     },
     resolve: {
         modules: [
 
         ],
         // 使用哪些扩展名
-        extensions: [],
+        extensions: ['', '.js', '.jsx'],
         // 设置模块别名
         alias: {
 
@@ -36,8 +49,18 @@ module.exports = {
         historyApiFallback: true,
         hot: true,// 热更新，基于HotModuleReplacementPlugin
         https: false,
-        noInfo: true, //only errors & warns on hot reload
-        port: 8000,
-        host: '127.0.0.1',
-    }
+        // noInfo: true, //only errors & warns on hot reload
+        port: 8080,
+        host: '0.0.0.0',
+    },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'index.html',
+            favicon: 'favicon.ico',
+            inject: true
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+    ],
 }
