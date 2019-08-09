@@ -1,37 +1,55 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+
+function _resolve(relatedPath) {
+    return path.resolve(__dirname, relatedPath)
+}
+
+function _join(relatedPath){
+    return path.join(__dirname, relatedPath)
+}
 
 module.exports = {
     entry: "../src/index.js",
-    output: path.resolve(__dirname, '../dist'),
-    filename: 'main.js',
-    publicPath: '/',
+    output: {
+        library: _resolve('dist'),
+        libraryTarget: "umd",
+        // webpack4都在output里面配置
+        filename: "js/main.js",
+        publicPath: ''
+    },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
-                test: /\.js|jsx?$/,
-                loaders: ['babel-loader'],
-                query: {
-                    presets: ['react', 'es2015']
-                }
+                test: /\.js|\.jsx?$/,
+                use: { 
+                    loader: 'babel-loader',
+                    options: {
+                        "presets":["@babel/react","@babel/env",]
+                    }
+                },
+                exclude: /node_modules/,
             }
             
         ],
     },
     resolve: {
+        // node模块
         modules: [
-
+            'node_modules'
         ],
         // 使用哪些扩展名
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
         // 设置模块别名
         alias: {
-
+            "@style": _join('style'),
+            "@services": _join('./services')
         }
     },
     performance: {
@@ -44,22 +62,27 @@ module.exports = {
             "": ""
         },
         // 静态文件路径
-        contentBase: path.join(__dirname, "public"),
+        contentBase: _join('public'),
         compress: true, // enable gzip
         historyApiFallback: true,
         hot: true,// 热更新，基于HotModuleReplacementPlugin
         https: false,
         // noInfo: true, //only errors & warns on hot reload
-        port: 8080,
-        host: '0.0.0.0',
+        port: 3000,
+        host: '127.0.0.1',
     },
 
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'index.html',
-            favicon: 'favicon.ico',
-            inject: true
+            template: _resolve('../index.html'),
+            favicon: _resolve('../favicon.ico'),
+            inject: false
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css', //抽离出的css文件名称
+            chunkFilename: '[id].css',
+            ignoreOrder: false,
         }),
         new webpack.HotModuleReplacementPlugin(),
     ],
