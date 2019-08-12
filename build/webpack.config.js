@@ -15,7 +15,6 @@ module.exports = {
     entry: "../src/index.js",
     output: {
         library: _resolve('dist'),
-        libraryTarget: "umd",
         // webpack4都在output里面配置
         filename: "js/main.js",
         publicPath: ''
@@ -23,8 +22,35 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader"],
+                test: /\.(css|less)$/,
+                use: [
+                    "style-loader", 
+                    {
+                        loader: 'css-loader', options: {
+                            modules: {
+                                mode: 'local',
+                                localIdentName: 'my-blog--[name]-[local]', // [path][name][local]   use [hash:base64] for production
+                                hashPrefix: 'hash',
+                            }, // 随机
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {           // 如果没有options这个选项将会报错 No PostCSS Config found
+                            plugins: (loader) => [
+                                require('postcss-import')({ root: loader.resourcePath }),
+                                require('autoprefixer')(), //CSS浏览器兼容
+                                require('cssnano')()  //压缩css
+                            ]
+                        }
+                    },
+                    "less-loader"
+                ],
+                exclude: [
+                    // 默认应用到全局的样式
+                    _resolve(__dirname, 'node_modules'),
+                    _resolve(__dirname, '../src/utils')
+                ]
             },
             {
                 test: /\.js|\.jsx?$/,
@@ -48,8 +74,7 @@ module.exports = {
         extensions: ['.js', '.jsx'],
         // 设置模块别名
         alias: {
-            "@style": _join('style'),
-            "@services": _join('./services')
+            '@': path.join(__dirname, '..', 'src'),
         }
     },
     performance: {
@@ -58,6 +83,7 @@ module.exports = {
     devtool: '',
     context: __dirname,
     devServer: {
+        // proxy
         proxy: {
             "": ""
         },
@@ -85,5 +111,9 @@ module.exports = {
             ignoreOrder: false,
         }),
         new webpack.HotModuleReplacementPlugin(),
+        // 提供react模块
+        new webpack.ProvidePlugin({
+            "React": "react",
+        })
     ],
 }

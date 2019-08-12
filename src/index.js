@@ -1,13 +1,20 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './common.css';
+import {Provider} from 'react-redux'
+import {applyMiddleware, createStore} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import reducers from '@/reducers';
+import MyRouter from '@/router';
+import './utils/common.css'
 
-export class App extends React.Component{
-    render(){
-        return (
-           <div className='css'>哈哈</div>
-        )
-    }
-}
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+    reducers,
+    applyMiddleware(sagaMiddleware),
+);
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+    <Provider store={store}>
+        <MyRouter />
+    </Provider>, 
+    document.getElementById('app')
+);
