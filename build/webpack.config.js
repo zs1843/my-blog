@@ -7,17 +7,15 @@ function _resolve(relatedPath) {
     return path.resolve(__dirname, relatedPath)
 }
 
-function _join(relatedPath){
-    return path.join(__dirname, relatedPath)
-}
 
 module.exports = {
     entry: "../src/index.js",
     output: {
         library: _resolve('dist'),
         // webpack4都在output里面配置
-        filename: "js/main.js",
-        publicPath: ''
+        libraryTarget: "umd",
+        filename: "main.js",
+        publicPath: './'
     },
     module: {
         rules: [
@@ -82,22 +80,6 @@ module.exports = {
     },
     devtool: '',
     context: __dirname,
-    devServer: {
-        // proxy
-        proxy: {
-            "": ""
-        },
-        // 静态文件路径
-        contentBase: _join('public'),
-        compress: true, // enable gzip
-        historyApiFallback: true,
-        hot: true,// 热更新，基于HotModuleReplacementPlugin
-        https: false,
-        // noInfo: true, //only errors & warns on hot reload
-        port: 3000,
-        host: '127.0.0.1',
-    },
-
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
