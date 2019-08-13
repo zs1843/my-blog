@@ -4,10 +4,9 @@ import styles from './home.less';
 
 class Home extends React.Component{
     render(){
-        console.log(this.props)
         return (
             <div className={styles.red1}>
-                dadadsadeqe
+                eqeq
             </div>
         )
     }

@@ -2,15 +2,18 @@ import {
     BrowserRouter as Router, 
     Route 
 } from 'react-router-dom';
+import Layout from '@/pages/layout/layout';
 
-import home from '@/pages/home';
+import home from '@/pages/home/home';
 
 const MyRouter = () => (
-    <Router>
-        <div>
-            <Route exact path="/" component={home}></Route>
-        </div>
-    </Router>
+    <Layout>
+        <Router>
+            <div>
+                <Route exact path="/" component={home}></Route>
+            </div>
+        </Router>
+    </Layout>
 );
 
 export default MyRouter;

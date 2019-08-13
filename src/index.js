@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from '@/sagas';
 import reducers from '@/reducers';
 import MyRouter from '@/router';
-import './utils/common.css'
+import './utils/common.less'
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
