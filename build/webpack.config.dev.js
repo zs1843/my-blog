@@ -12,7 +12,11 @@ module.exports = merge(common, {
     devServer: {
         // proxy
         proxy: {
-            "": ""
+            "/api":  {
+                target: 'http://hyu6936220001.my3w.com/wp/wp-json/wp/v2/',
+                changeOrigin: true,
+                pathRewrite: { '^/api': '' }
+            }
         },
         // 静态文件路径
         contentBase: _join('public'),
@@ -24,7 +28,4 @@ module.exports = merge(common, {
         port: 3000,
         host: '127.0.0.1',
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),  //webpack内置的热更新插件
-    ],
 })

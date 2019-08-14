@@ -7,7 +7,6 @@ function _resolve(relatedPath) {
     return path.resolve(__dirname, relatedPath)
 }
 
-
 module.exports = {
     entry: "../src/index.js",
     output: {
@@ -15,7 +14,7 @@ module.exports = {
         // webpack4都在output里面配置
         libraryTarget: "umd",
         filename: "main.js",
-        publicPath: './'
+        publicPath: ''
     },
     module: {
         rules: [
@@ -32,17 +31,18 @@ module.exports = {
                             }, // 随机
                         }
                     },
+                    "less-loader",
                     {
                         loader: 'postcss-loader',
                         options: {           // 如果没有options这个选项将会报错 No PostCSS Config found
-                            plugins: (loader) => [
-                                require('postcss-import')({ root: loader.resourcePath }),
-                                require('autoprefixer')(), //CSS浏览器兼容
-                                require('cssnano')()  //压缩css
+                            plugins:[
+                                // require('postcss-import')({ root: loader.resourcePath }),
+                                require('autoprefixer')("last 100 versions"), //CSS浏览器兼容
+                                // require('cssnano')()  //压缩css
                             ]
                         }
                     },
-                    "less-loader"
+                    
                 ],
                 exclude: [
                     // 默认应用到全局的样式
@@ -52,12 +52,14 @@ module.exports = {
             },
             {
                 test: /\.js|\.jsx?$/,
-                use: { 
-                    loader: 'babel-loader',
-                    options: {
-                        "presets":["@babel/react","@babel/env",]
-                    }
-                },
+                use: [
+                    { 
+                        loader: 'babel-loader',
+                        options: {
+                            "presets":["@babel/react","@babel/env",]
+                        }
+                    },
+                ],
                 exclude: /node_modules/,
             }
             
@@ -81,11 +83,12 @@ module.exports = {
     devtool: '',
     context: __dirname,
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: _resolve('../index.html'),
             favicon: _resolve('../favicon.ico'),
-            inject: false
+            inject: false,
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css', //抽离出的css文件名称
@@ -96,6 +99,6 @@ module.exports = {
         // 提供react模块
         new webpack.ProvidePlugin({
             "React": "react",
-        })
+        }),
     ],
 }

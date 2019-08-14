@@ -1,15 +1,15 @@
-import { HOME } from './types';
+import { USER } from '../types';
 
 const initialState = {
-    a: 0
+    
 };
 
-function homeReducer(state = initialState, action){
+function LayoutReducer(state = initialState, action){
     switch(action.type){
-        case HOME: {
+        case USER: {
             return {
                 ...state,
-                a: 1
+                
             }
         }
         default:{
@@ -18,4 +18,4 @@ function homeReducer(state = initialState, action){
     }
 }
 
-export default homeReducer;
+export default LayoutReducer;

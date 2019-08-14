@@ -7,13 +7,14 @@ import Layout from '@/pages/layout/layout';
 import home from '@/pages/home/home';
 
 const MyRouter = () => (
-    <Layout>
+    
         <Router>
-            <div>
-                <Route exact path="/" component={home}></Route>
-            </div>
+            <Layout>
+                <div>
+                    <Route exact path="/" component={home}></Route>
+                </div>
+            </Layout>
         </Router>
-    </Layout>
 );
 
 export default MyRouter;

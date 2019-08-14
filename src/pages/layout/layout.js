@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import styles from './layout.less';
 
 class Layout extends React.Component{
+    componentDidMount(){
+        console.log(this.refs)
+    }
     render(){
+        
         return (
             <div className={styles.wrapper}>
                 <div className={styles.header}>
@@ -15,7 +19,7 @@ class Layout extends React.Component{
                         
                     </div>
                 </div>
-                <div className={styles.content}>
+                <div ref={ref=>this.refs = ref} className={styles.content}>
                     {this.props.children}
                 </div>
             </div>

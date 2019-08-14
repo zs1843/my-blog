@@ -1,9 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './home.less';
+import http from "@/utils/http"; 
 
 class Home extends React.Component{
+
+    componentDidMount(){
+        
+    }
+
     render(){
+        
         return (
             <div className={styles.red1}>
                 eqeq
