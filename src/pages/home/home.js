@@ -14,7 +14,6 @@ class Home extends React.Component{
         
         return (
             <div className={styles.red1}>
-                eqeq
             </div>
         )
     }

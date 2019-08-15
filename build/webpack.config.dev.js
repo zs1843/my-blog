@@ -9,12 +9,12 @@ function _join(relatedPath){
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'source-map', // 方便调试
+    devtool: 'source-map', // 显示编译前文件 方便调试
     devServer: {
         // proxy
         proxy: {
             "/api":  {
-                target: 'http://hyu6936220001.my3w.com/wp/wp-json/wp/v2/',
+                target: 'http://www.zs1843.top/',
                 changeOrigin: true,
                 pathRewrite: { '^/api': '' }
             }

@@ -4,7 +4,7 @@ import utils from '@/utils';
 const baseURL = process.env.NODE_ENV === 'development' ? '/api' : '';
 const headers = {}//isFrom ? {'Content-Type': 'application/x-www-form-urlencoded'} : {'Content-Type': 'application/json', 'Accept': 'application/json'}
 const instance = axios.create({
-    baseURL,
+    baseURL: baseURL + '/wp/wp-json/wp/v2/',
     headers,
     timeout: 10000
 });

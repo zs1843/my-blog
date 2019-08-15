@@ -6,6 +6,8 @@ class Layout extends React.Component{
     componentDidMount(){
     }
     render(){
+
+        const { menu } = this.props.layout;
         
         return (
             <div className={styles.wrapper}>
@@ -15,7 +17,9 @@ class Layout extends React.Component{
                         <span>个人中心</span>
                     </div>
                     <div className={styles.navMenu}>
-                        
+                        {menu.map(menuItem=> (
+                            <div key={menuItem} className={styles.menuItem}>name</div>
+                        ))}
                     </div>
                 </div>
                 <div className={styles.content}>
@@ -30,7 +34,9 @@ class Layout extends React.Component{
 }
 
 const mapStateToProps = (state, ownProps) =>{
-    return state;
+    return {
+        layout: state.layoutReducer
+    };
 }
 // const mapDispatchToProps = (dispatch, ownProps)=>{
 //     return bindActionCreators({createSagaAction1, createSagaAction2}, dispatch);
