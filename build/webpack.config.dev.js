@@ -9,6 +9,7 @@ function _join(relatedPath){
 
 module.exports = merge(common, {
     mode: 'development',
+    devtool: 'source-map', // 方便调试
     devServer: {
         // proxy
         proxy: {

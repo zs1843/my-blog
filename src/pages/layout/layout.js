@@ -4,7 +4,6 @@ import styles from './layout.less';
 
 class Layout extends React.Component{
     componentDidMount(){
-        console.log(this.refs)
     }
     render(){
         
@@ -19,8 +18,11 @@ class Layout extends React.Component{
                         
                     </div>
                 </div>
-                <div ref={ref=>this.refs = ref} className={styles.content}>
+                <div className={styles.content}>
                     {this.props.children}
+                </div>
+                <div className={styles.footer}>
+                    <a href="http://www.beian.miit.gov.cn/" target="blank">苏ICP备19043223号</a>
                 </div>
             </div>
         )

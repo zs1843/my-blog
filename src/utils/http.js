@@ -19,10 +19,10 @@ export default {
             }).then(response => {
                 const res = response.data;
                 if(res && response.status === status){
-                    resolve(res);
+                    return resolve(res);
                 }
 
-                reject(res);
+                // reject(res);
 
             }).catch( err => {
 

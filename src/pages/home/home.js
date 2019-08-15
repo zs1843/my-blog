@@ -6,7 +6,8 @@ import http from "@/utils/http";
 class Home extends React.Component{
 
     componentDidMount(){
-        
+        console.log(this.props)
+        this.props.dispatch({type: 'GET_POSTS_REQUEST'})
     }
 
     render(){

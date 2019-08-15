@@ -56,7 +56,7 @@ module.exports = {
                     { 
                         loader: 'babel-loader',
                         options: {
-                            "presets":["@babel/react","@babel/env",]
+                            "presets":["@babel/react","@babel/env"]
                         }
                     },
                 ],
@@ -80,7 +80,6 @@ module.exports = {
     performance: {
 
     },
-    devtool: '',
     context: __dirname,
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
